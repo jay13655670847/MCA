@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: EurekaServer7002
+    name: EurekaServer
 
 eureka:
   client:
@@ -11,3 +11,5 @@ eureka:
     register-with-eureka: true
     service-url:
       defaultZone: http://localhost:7001/eureka
+
+

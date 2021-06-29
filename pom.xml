@@ -11,6 +11,8 @@
     <modules>
         <module>EurekaServer</module>
         <module>EurekaServer7002</module>
+        <module>EurekaProvider</module>
+        <module>EurekaConsumer</module>
     </modules>
 
     <properties>
