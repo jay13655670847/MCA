@@ -5,6 +5,8 @@ import com.netflix.appinfo.InstanceInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.cloud.netflix.eureka.EurekaServiceInstance;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -21,10 +23,13 @@ public class TestController {
     @Resource
     RestTemplate restTemplate;
 
+    @Autowired
+    LoadBalancerClient loadBalancerClient;
+
     @GetMapping("/consumer/hello")
     public String testHello(){
 
-        List<ServiceInstance> instanceList = discoveryClient.getInstances("EurekaProvider8001");
+        List<ServiceInstance> instanceList = discoveryClient.getInstances("EurekaProvider");
 
         String forObject =null;
 
@@ -45,7 +50,32 @@ public class TestController {
     }
 
     @GetMapping("/consumer/hello2")
-    public String test(){
+    public String testHello2(){
         return "Hello Eureka!";
+    }
+
+    @GetMapping("/consumer/hello3")
+    public String testHello3(){
+
+       // List<ServiceInstance> instanceList = discoveryClient.getInstances("EurekaProvider");
+
+        ServiceInstance eurekaProvider = loadBalancerClient.choose("EurekaProvider");
+
+        System.out.println("========eurekaProvider:"+eurekaProvider.toString());
+
+        String url = "http://" + eurekaProvider.getHost() + ":" + eurekaProvider.getPort() + "/hello";
+
+        System.out.println("url:"+url);
+
+        String forObject = restTemplate.getForObject(url, String.class);
+
+        return forObject;
+    }
+
+    @GetMapping("/consumer/hello4")
+    public String testHello4(){
+
+        String forObject = restTemplate.getForObject("http://EurekaProvider/hello", String.class);
+        return forObject;
     }
 }

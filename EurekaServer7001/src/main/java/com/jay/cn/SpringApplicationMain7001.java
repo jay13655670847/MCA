@@ -9,10 +9,10 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 @SpringBootApplication
 @EnableEurekaServer
 @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
-public class SpringApplicationMain7002 {
-
+public class SpringApplicationMain7001 {
+   
     public static void main(String[] args) {
-        SpringApplication.run(SpringApplicationMain7002.class);
+        SpringApplication.run(SpringApplicationMain7001.class);
     }
 
 }
