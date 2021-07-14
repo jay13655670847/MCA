@@ -16,6 +16,9 @@
         <module>EurekaProvider8002</module>
         <module>EurekaConsumerOpenFeign</module>
         <module>Common</module>
+        <module>Hystrix</module>
+        <module>Dashboard9001</module>
+        <module>admin</module>
     </modules>
 
     <properties>
