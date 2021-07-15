@@ -18,6 +18,6 @@ public class UserController {
     @GetMapping("/login.do")
     public String login(){
         System.out.println("登录~~~");
-        return "login";
+        return "ok";
     }
 }
