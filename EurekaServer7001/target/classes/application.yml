@@ -1,0 +1,33 @@
+server:
+  port: 7001
+
+spring:
+  application:
+    name: EurekaServer
+  security:
+    user:
+      name: zhangsan
+      password: 123456
+  boot:
+    admin:
+      client:
+        url: http://localhost:8888
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetchRegistry: true
+    service-url:
+      #defaultZone: http://zhangsan:123456@localhost:7002/eureka
+      defaultZone: http://localhost:7002/eureka
+  server:
+    enable-self-preservation: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+

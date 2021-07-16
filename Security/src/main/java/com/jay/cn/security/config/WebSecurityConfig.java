@@ -5,8 +5,10 @@ import com.jay.cn.security.config.handler.MyAuthenticationFailureHandler;
 import com.jay.cn.security.config.handler.MyAuthenticationSuccessHandler;
 import com.jay.cn.security.config.service.MyAuthProvider;
 import com.jay.cn.security.config.service.MyUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,19 +29,24 @@ import java.io.IOException;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         //super.configure(web);
-        web.ignoring().antMatchers("/templates/**","/static/**","login.html","/**.css");
+        web.ignoring().antMatchers("/templates/**","/static/**","login.html","/**.css","/css/**","/img/**","/js/**","/vendor/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin() .loginProcessingUrl("/login") //当发现/login 时认为是登录，需 要执行 UserDetailsServiceImpl
-                .successForwardUrl("/ok") //登录成功后，跳转到指定请求（此处是 post 请求）
+        http.formLogin()
+                //此处defaultSuccessUrl不起作用，只需把successHandler前移
+                .successHandler(new MyAuthenticationSuccessHandler())
+                .loginProcessingUrl("/login") //当发现/login 时认为是登录，需 要执行 UserDetailsServiceImpl
+                .successForwardUrl("/index") //登录成功后，跳转到指定请求（此处是 post 请求）
                 .failureForwardUrl("/login")//登录失败
                 .loginPage("/login.html")
-                .successHandler(new MyAuthenticationSuccessHandler())
+                .defaultSuccessUrl("/index")//此处后面可以加个参数true，意思无论登陆之前是否有请求，都跳转到指定请求
+                .permitAll()
                 .failureHandler(new MyAuthenticationFailureHandler());
 
         // url 拦截
@@ -47,6 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login.html").permitAll() //login.html 不需要被认证
                 .antMatchers("/login.html").permitAll() //loginfail.html 不需要被认证
                 .anyRequest().authenticated();//所有的请求都必须被认证。必须登录 后才能访问。
+
+        http.rememberMe();
 
         // 关闭 csrf 防护
         http.csrf().disable();

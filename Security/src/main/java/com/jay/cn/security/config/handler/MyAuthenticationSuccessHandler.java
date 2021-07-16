@@ -5,6 +5,9 @@ import com.jay.cn.security.model.service.impl.SysUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.spring5.context.SpringContextUtils;
 
@@ -42,8 +45,21 @@ public class MyAuthenticationSuccessHandler implements org.springframework.secur
 //
 //        sysUserService.update(user);
 
+        //跳转到登录之前的请求
+//        RequestCache cache =new HttpSessionRequestCache();
+//        SavedRequest request = cache.getRequest(httpServletRequest, httpServletResponse);
+//
+//        if(request !=null){
+//            String url = request.getRedirectUrl();
+//            httpServletResponse.sendRedirect(url);
+//        }else{
+//            httpServletResponse.sendRedirect("/ok.html");
+//        }
+
+
+
         System.out.println("********** SuccessHandler end ****************" );
-        //httpServletRequest.getRequestDispatcher("ok.html").forward(httpServletRequest,httpServletResponse);
+
 
     }
 }
