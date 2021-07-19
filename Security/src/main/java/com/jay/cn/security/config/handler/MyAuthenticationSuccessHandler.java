@@ -30,12 +30,9 @@ public class MyAuthenticationSuccessHandler implements org.springframework.secur
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         System.out.println("********** SuccessHandler start ****************" );
-        String username = authentication.getPrincipal().toString();
+        String username = httpServletRequest.getParameter("username");
 
-        String password = authentication.getDetails().toString();
-
-        System.out.println("username:"+username);
-        System.out.println("password:"+password);
+        String password = httpServletRequest.getParameter("password");
 
 //        SysUser user =sysUserService.selectByName(username);
 //
@@ -56,7 +53,8 @@ public class MyAuthenticationSuccessHandler implements org.springframework.secur
 //            httpServletResponse.sendRedirect("/ok.html");
 //        }
 
-
+        httpServletRequest.getSession().setAttribute("username",username);
+        httpServletResponse.sendRedirect("/index.html");
 
         System.out.println("********** SuccessHandler end ****************" );
 

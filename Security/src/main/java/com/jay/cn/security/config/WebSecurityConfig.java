@@ -47,7 +47,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login.html")
                 .defaultSuccessUrl("/index")//此处后面可以加个参数true，意思无论登陆之前是否有请求，都跳转到指定请求
                 .permitAll()
+                .successHandler(new MyAuthenticationSuccessHandler())
                 .failureHandler(new MyAuthenticationFailureHandler());
+
 
         // url 拦截
         http.authorizeRequests()

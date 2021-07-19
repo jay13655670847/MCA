@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+<meta name="keywords" content="LightYear,LightYearAdmin,光年,后台模板,后台管理系统,光年HTML模板">
+<meta name="description" content="Light Year Admin V4是一个基于Bootstrap v4.4.1的后台管理系统的HTML模板。">
+<meta name="author" content="yinq">
+<title>新增用户</title>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/animate.min.css">
+<!--标签插件-->
+<link rel="stylesheet" type="text/css" href="js/jquery-tagsinput/jquery.tagsinput.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.min.css">
+  <script type="text/javascript" src="js/include.js"></script>
+</head>
+
+<body>
+<!--页面loading-->
+<div id="lyear-preloader" class="loading">
+  <div class="ctn-preloader">
+    <div class="round_spinner">
+      <div class="spinner"></div>
+      <img src="images/loading-logo.png" alt="">
+    </div>
+  </div>
+</div>
+<!--页面loading end-->
+<div class="lyear-layout-web">
+  <div class="lyear-layout-container">
+    <!--左侧导航-->
+    <include src="left.html"></include>
+    <!--头部信息-->
+    <include src="top.html"></include>
+    <!--End 头部信息-->
+    
+    <!--页面主要内容-->
+    <main class="lyear-layout-content">
+      
+      <div class="container-fluid p-t-15">
+        
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                
+                <form id="userInfo" class="row">
+
+                  <div class="form-group col-md-12">
+                    <label for="username">账号</label>
+                    <input type="text" class="form-control" id="account" name="account" value="" placeholder="请输入账号" />
+                  </div>
+
+                  <div class="form-group col-md-12">
+                    <label for="username">用户名</label>
+                    <input type="text" class="form-control" id="username" name="username" value="" placeholder="请输入用户名" />
+                  </div>
+
+                  <div class="form-group col-md-12">
+                    <label for="password">密码</label>
+                    <input type="password" class="form-control" id="password" name="password" value="" placeholder="密码" />
+                  </div>
+
+                  <div class="form-group col-md-12">
+                    <label>状态</label>
+                    <div class="clearfix">
+                      <div class="custom-control custom-radio custom-control-inline">
+      	              <input type="radio" id="statusOne" name="status" class="custom-control-input" value="enable">
+      	              <label class="custom-control-label" for="statusOne">禁用</label>
+      	            </div>
+      	            <div class="custom-control custom-radio custom-control-inline">
+      	              <input type="radio" id="statusTwo" name="status" class="custom-control-input" value="disable" checked>
+      	              <label class="custom-control-label" for="statusTwo">启用</label>
+      	            </div>
+                    </div>
+                  </div>
+
+                </form>
+
+                <div class="form-group col-md-12">
+                  <button type="submit" class="btn btn-primary" id="submit">确 定</button>
+                  <button type="button" class="btn btn-default" onclick="javascript:history.back(-1);return false;">返 回</button>
+                </div>
+       
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+    
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/popper.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.min.js"></script>
+<!--标签插件-->
+<script src="js/jquery-tagsinput/jquery.tagsinput.min.js"></script>
+<script type="text/javascript" src="js/main.min.js"></script>
+<script type="text/javascript">
+
+  $("#submit").click(function (){
+
+    if($("#username").val=="" || $("#account").val()=="" || $("#password").val()==""){
+      alert("关键信息不能为空");
+      return;
+    }
+
+    $.ajax({
+      type:'post',
+      url:getContextPath()+'/userManager/add.do',
+      data:$("#userInfo").serialize(),
+      dataType:'json',
+      success:function (data){
+        if (data.code=="0000"){
+          alert(data.msg);
+        }else{
+          alert(data.msg);
+        }
+      }
+    })
+  });
+
+function getContextPath() {
+  var path = document.location.origin;
+  return path;
+}
+
+</script>
+</body>
+</html>
